@@ -1,0 +1,237 @@
+body {
+  padding: 0;
+  font-family: Trebuchet, serif;
+  color: #2a4c3a;
+  font-weight: 200;
+  padding-top: 2em;
+}
+
+::selection {
+  background: #549974;
+  color: white;
+}
+
+a {
+  color: #549974;
+}
+a:hover,a:focus {
+  color: #2a4c3a;
+}
+
+header {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  height: 2em;
+  background: white;
+  border-bottom: 2px solid #549974;
+  overflow: hidden;
+  min-height: 2em;
+  position: fixed;
+  top:0;
+  right: 0;
+  left:0;
+  z-index: 999;
+  max-height: 100%;
+  overflow: auto;
+
+}
+  header .inner {
+    padding: 0 1em;
+  }
+h1 {
+  font-size: 1em;
+  font-weight: 200;
+  margin: 0;
+  float: left;
+  line-height: 2em;
+}
+  h1 a {
+    color: #2a4c3a;
+    text-decoration: none;
+  }
+  h1 a:hover {
+    opacity: 0.8;
+  }
+  header .expand {
+    float: right;
+    display: block;
+    background: #e7f7ee;
+    height: 0.8em;
+    width: 0.9em;
+    padding: 0.2em 0.3em;
+    margin: 0.4em 0;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  header .expand:hover, header .expand:focus {
+    opacity: 1;
+  }
+    header .expand i {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: #549974;
+      margin-bottom: 3px;
+    }
+  header .slideycont {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2em;
+  }
+
+  header .slidey {
+    opacity: 0.6;
+    border: 0.5em solid transparent;
+    border-top: 0.5em solid #549974;
+    width: 0;
+    height: 0;
+    float: right;
+    position: absolute;
+    top: 50%;
+    margin-top: -0.25em;
+    right:0.5em;
+  }
+  header .slideycont:hover .slidey {
+    opacity: 1;
+  }
+  header ul li.expanded .slidey {
+    border-top-color: transparent;
+    border-bottom-color: #549974;
+    margin-top: -0.75em;
+  }
+  header ul {
+    clear: both;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9em;
+    background: white;
+  }
+    header ul li a {
+      position: relative;
+      display: block;
+      padding: 0.5em 1em;
+      color: #2a4c3a;
+      text-decoration: none;
+    }
+    header ul li a:hover,header ul li a:focus,header ul li a.active {
+      background: #e7f7ee;
+    }
+    header ul ul a {
+      text-indent: 1em;
+    }
+
+footer {
+  background: #e7f7ee;
+  text-align: center;
+  padding: 1em;
+}
+  footer p {
+    margin: 0;
+    font-size: 0.8em;
+  }
+
+
+.hero {
+  background: #80e8b1;
+  margin: 0;
+  padding: 1em;
+  text-align: center;
+  font-weight: 200;
+  font-size: 2em;
+  border-bottom: 2px solid #549974;
+}
+  .hero span {
+    display: block;
+    position: relative;
+    z-index: 2;
+  }
+  .hero span.amp {
+    z-index:1;
+    color: #ebfdf4;
+    font-size: 3.4em;
+    line-height: 0.5em;
+  }
+  .hero span.subtitle {
+    font-size: 0.5em;
+  }
+
+.main-list {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.main-list h3, .main-list h4 {
+  font-weight: 200;
+  margin: 0;
+  padding-top: 1em;
+}
+.main-list h3 {
+  font-size: 1.5em;
+}
+.main-list h4 {
+  font-size: 1.2em;
+}
+.main-list ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1.5em;
+}
+
+.mid {
+  padding: 1em;
+  margin: 0 auto;
+  max-width: 1000px;
+  font-size: 1.2em;
+  line-height: 1.4em;
+}
+
+
+@media screen and (min-width: 768px) {
+  header {
+    font-size: 1.4em;
+  }
+  .hero {
+    padding: 2em;
+    font-size: 2.5em;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .hero {
+    padding: 2em;
+    font-size: 3em;
+  }
+  header {
+    overflow: visible;
+    height: 2em !important;
+  }
+  header .expand {
+    display: none;
+  }
+  header nav > ul {
+    clear: none;
+  }
+  header nav > ul > li {
+    float: left;
+    margin-right: 0.5em;
+  }
+  header li.expandable a {
+    padding-right: 2.5em;
+  }
+  header nav > ul > li:first-child {
+    margin-left: 2em;
+  }
+  header ul ul {
+    border-bottom: 2px solid #549974;
+    display: none;
+  }
+  header ul ul a {
+    text-indent: 0;
+  }
+  header .slideycont {
+    display: inline-block;
+  }
+}

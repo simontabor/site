@@ -1,0 +1,26 @@
+<header>
+  <div class="inner">
+    <h1><a href="/">Simon Tabor</a></h1>
+    <a class="expand">
+      <i> </i>
+      <i> </i>
+      <i> </i>
+    </a>
+  </div>
+  <nav>
+    <% var url = page.path.split('index.html')[0]; %>
+    <ul>
+      <li><a class="<%= url == '/' ? 'active' : '' %>" href="/">Home</a></li>
+      <li><a class="<%= url == '/about/' ? 'active' : '' %>" href="/about">About</a></li>
+      <li class="expandable">
+        <a class="<%= url == '/labs/' ? 'active' : '' %>" href="/labs">Labs <span class="slideycont"><span class="slidey"></span></span></a>
+        <ul>
+          <li><a class="<%= url == '/labs/toggles/' ? 'active' : '' %>" href="/labs/toggles">jQuery Toggles</a></li>
+          <li><a class="<%= url == '/labs/cube/' ? 'active' : '' %>" href="/labs/cube">3D Cube</a></li>
+          <li><a class="<%= url == '/labs/twitter/' ? 'active' : '' %>" href="/labs/twitter">Twitter Mutual Followers</a></li>
+          <li><a class="<%= url == '/labs/audio/' ? 'active' : '' %>" href="/labs/audio">HTML5 Audio Player</a></li>
+          <li><a class="<%= url == '/labs/serenity/' ? 'active' : '' %>" href="/labs/serenity">Serenity - static site generator</a></li>
+        </ul>
+      </li>
+    </ul>
+</header>
