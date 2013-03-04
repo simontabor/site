@@ -14,6 +14,14 @@ $('#theme').change(function() {
   $('.examples').removeClass('light dark iphone').addClass($(this).find('option:selected').attr('rel'));
   GoSquared.q.push(['TrackEvent','Changed Theme to '+$(this).find('option:selected').text(), {}]);
 });
+
+$('.downloads .min').on('click',function() {
+  GoSquared.q.push(['TrackEvent','Downloaded Toggles', {}]);
+});
+$('.downloads .minny').on('click',function() {
+  GoSquared.q.push(['TrackEvent','Downloaded Minified Toggles', {}]);
+});
+
 function selectText(element) {
   var doc = document;
   var text = element;

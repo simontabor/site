@@ -23,7 +23,6 @@ header {
   height: 2em;
   background: white;
   border-bottom: 2px solid #549974;
-  overflow: hidden;
   min-height: 2em;
   position: fixed;
   top:0;
@@ -31,7 +30,7 @@ header {
   left:0;
   z-index: 999;
   max-height: 100%;
-  overflow: auto;
+  overflow: hidden;
 
 }
   header .in {

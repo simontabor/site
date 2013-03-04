@@ -1,0 +1,53 @@
+{
+  "layout": "base",
+  "title": "3D Cube",
+  "scripts": ["/js/lib/modernizr.js","/js/cube.js"],
+  "css": ["/css/cube.css"]
+}
+______
+
+<div class="hero">
+  <h2>3D Cube</h2>
+  <h3 class="subtitle">A 3D Rotating Cube using CSS3 and HTML5</h3>
+
+</div>
+
+
+
+<section class="cubey">
+  <div id="cube" class="show-front spinny">
+    <figure class="front">1</figure>
+    <figure class="back">2</figure>
+    <figure class="right">3</figure>
+    <figure class="left">4</figure>
+    <figure class="top">5</figure>
+    <figure class="bottom">6</figure>
+  </div>
+</section>
+<div class="controls">
+  <div class="cubenavigation">
+    <h3>View</h3>
+    <p class="cubenav">
+      <a class="show-front active">Front</a><a class="show-back">Back</a><a class="show-right">Right</a><a class="show-left">Left</a><a class="show-bottom">Bottom</a><a class="show-top">Top</a>
+    </p>
+  </div>
+  <div class="sensitivity">
+    <h3>Sensitivity</h3>
+    <input type="range" name="sensitivity" min="1" max="11" value="6" />
+    <p class="sensitivity subval">6</p>
+  </div>
+  <div class="colors">
+    <h3>Colour</h3>
+    <input type="color" class="color" value="#DEDEDE" name="color" />
+    <input type="range" value="4" min="0" max="10" name="opacity" />
+    <p class="opacity subval">0.4</p>
+  </div>
+  <div class="scale">
+    <h3>Scale</h3>
+    <input type="range" value="8" min="1" max="10" name="scale" />
+    <p class="scale subval">0.8</p>
+  </div>
+  <div class="spinning">
+    <a class="spin active">I'm spinning!</a>
+  </div>
+</div>
