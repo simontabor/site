@@ -1,6 +1,6 @@
 body {
   padding: 0;
-  font-family: Trebuchet, serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #2a4c3a;
   font-weight: 200;
   padding-top: 2em;
@@ -19,7 +19,6 @@ a:hover,a:focus {
 }
 
 header {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   height: 2em;
   background: white;
@@ -139,6 +138,7 @@ footer {
 
 
 .hero {
+  font-family: Trebuchet,serif;
   background: #80e8b1;
   margin: 0;
   padding: 1em;
@@ -285,7 +285,6 @@ ul.labs {
   border-radius: 4px;
   padding: 1em;
   font-size: 0.8em;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .examples code {
   font-size: 0.8em;
