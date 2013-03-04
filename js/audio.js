@@ -11,10 +11,10 @@ if (!Modernizr.inputtypes.range) {
 /* globals */
 var player = $('#player'), 
 seek=$('#seek'), vol=$('#vol'), 
-volumec = $('#volume',vol), 
+volumec = vol.find('#volume'), 
 stop = $('#stop'), 
 autoplay=true, 
-playpause = $('#playpause',player), 
+playpause = player.find('#playpause'), 
 autotoggle=$('#autoplay'),
 nowplay = {},
 index = 0,
@@ -23,14 +23,14 @@ songs = [],
 updates = 0,
 percentLoaded = 0;
 nowplay.c = $('#nowplaying'), 
-nowplay.title= $('.title', nowplay.c), 
-nowplay.artist = $('.artist',nowplay.c), 
-nowplay.album = $('.album',nowplay.c), 
-nowplay.year= $('.year',nowplay.c), 
-nowplay.art = $('.art',nowplay.c),
+nowplay.title= nowplay.c.find('.title'), 
+nowplay.artist = nowplay.c.find('.artist'), 
+nowplay.album = nowplay.c.find('.album'), 
+nowplay.year= nowplay.c.find('.year'), 
+nowplay.art = nowplay.c.find('.art');
 
 
-autotoggle.live('click',function() {
+autotoggle.on('click',function() {
   if (autotoggle.hasClass('active')) {
     autotoggle.removeClass('active');
     autoplay = false;
@@ -41,12 +41,12 @@ autotoggle.live('click',function() {
 });
 
 seek.on('change',function() {
-  song.currentTime= $(this).attr('value');
+  song.currentTime= $(this).val();
   seek.attr('max', song.duration);
 });
 
 volumec.on('change',function() {
-  song.volume = ($(this).attr('value') -1) / 10;
+  song.volume = ($(this).val() -1) / 10;
   if (song.volume > 0.7) {
     vol.css('backgroundPosition','-11px -56px');
   }
@@ -117,7 +117,7 @@ function playnext() {
   }
 }
 
-$('#playlist li').live('click', function() {
+$('#playlist li').on('click', function() {
   if (!$(this).hasClass('songs')) {
     playpause.removeClass('playing');
     var newindex = $('#playlist li').index(this);
@@ -151,9 +151,9 @@ function playerinit(songdata, songtype) {
   song = [];
   song = new Audio(songdata);
   song.addEventListener('timeupdate',function (){
-    current = parseInt(song.currentTime, 10);
-    perc = current/song.duration * 100;
-    seek.attr('value',song.currentTime);
+    var current = +song.currentTime;
+    var perc = current/song.duration * 100;
+    seek.val(song.currentTime);
     seek.attr('max', song.duration);
   });
   song.addEventListener('ended',function() {
@@ -169,6 +169,10 @@ function playerinit(songdata, songtype) {
 function updateList(songlist) {
 
 }
+
+
+
+
 function updateProgress(evt) {
   if (evt.lengthComputable) {
     percentLoaded = Math.round((evt.loaded / evt.total) * 100);
@@ -177,6 +181,9 @@ function updateProgress(evt) {
     }
   }
 }
+
+
+
 function filechanged(files) {
   function getMetaData(i) {
     if (!songs[i].meta) {
@@ -232,8 +239,8 @@ function filechanged(files) {
       }
     }
   }
-  var oldlength = songs.length;
   console.log(files);
+  var oldlength = songs.length;
   for (var i = 0; i< files.length; i++) {
     if (files[i].type == 'audio/mp3') {
       songs.push(files[i]);
@@ -264,6 +271,11 @@ function filechanged(files) {
   }
   updates++;
 }
+
+
+
+
+
 $('#choosefiles').on('change',function(e) {
   var files = e.target.files;
   filechanged(files);
