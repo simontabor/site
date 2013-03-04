@@ -272,7 +272,7 @@ ul.labs {
   height: 35px;
   width: 110px;
 }
-.themes > div.dark > div {
+.themes > div.dark > div, .examples.dark {
   background: -webkit-gradient(linear,left bottom,left top,color-stop(0%,#242529),color-stop(100%,#34363B));
   background: -webkit-linear-gradient(bottom,#242529 0,#34363B 100%);
   background: -moz-linear-gradient(bottom,#242529 0,#34363B 100%);
@@ -280,9 +280,34 @@ ul.labs {
   background: -o-linear-gradient(bottom,#242529 0,#34363B 100%);
   background: linear-gradient(bottom,#242529 0,#34363B 100%);
 }
+.examples {
+  text-align: center;
+  border-radius: 4px;
+  padding: 1em;
+  font-size: 0.8em;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.examples code {
+  font-size: 0.8em;
+  display: block;
+}
+.examples .example {
+  margin: 1em 0;
+}
+.examples .toggle {
+  margin: 0 auto;
+}
+.examples.dark {
+  color: white;
+}
 .themes h5 {
   background: #E7F7EE;
   line-height: 2em;
+}
+.license {
+  font-size: 0.7em;
+  margin-top: 1em;
+  text-align: center;
 }
 
 
