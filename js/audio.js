@@ -1,282 +1,318 @@
-/* crappy browser checks */
-if ((typeof Audio != 'function') || (typeof FileReader != 'function')) {
-  $('div[role="main"]').text('Sorry, your browser doesn\'t support HTML5 features used here. Please upgrade to Chrome.').css('textAlign','center');
-}
-if (!Modernizr.inputtypes.range) {
-  console.log('no ranges!!!');
-  $('#seek').css('opacity','0');
-  $('#vol').css('opacity','0');
-}
-/* end browser checks */
-/* globals */
-var player = $('#player'), 
-seek=$('#seek'), vol=$('#vol'), 
-volumec = vol.find('#volume'), 
-stop = $('#stop'), 
-autoplay=true, 
-playpause = player.find('#playpause'), 
-autotoggle=$('#autoplay'),
-nowplay = {},
-index = 0,
-song, 
-songs = [], 
-updates = 0,
-percentLoaded = 0;
-nowplay.c = $('#nowplaying'), 
-nowplay.title= nowplay.c.find('.title'), 
-nowplay.artist = nowplay.c.find('.artist'), 
-nowplay.album = nowplay.c.find('.album'), 
-nowplay.year= nowplay.c.find('.year'), 
-nowplay.art = nowplay.c.find('.art');
+// crappy browser checks
+$(function() {
 
-
-autotoggle.on('click',function() {
-  if (autotoggle.hasClass('active')) {
-    autotoggle.removeClass('active');
-    autoplay = false;
-  }else{
-    autotoggle.addClass('active');
-    autoplay = true;
+  if ((typeof Audio != 'function') || (typeof FileReader != 'function')) {
+    $('#audio').text('Sorry, your browser doesn\'t support HTML5 features used here. Please upgrade to Chrome.').css('textAlign','center');
   }
-});
 
-seek.on('change',function() {
-  song.currentTime= $(this).val();
-  seek.attr('max', song.duration);
-});
+  // elements and defaults
+  var
+  currentSong,
+  player = $('#player'),
+  seek = $('#seek'),
+  vol = $('#vol'),
+  volumec = vol.find('#volume'),
+  stop = $('#stop'),
+  autoplay = true,
+  playpause = player.find('#playpause'),
+  autotoggle=$('#autoplay'),
+  index = 0,
+  songs = [],
+  updates = 0,
+  percentLoaded = 0,
+  volume = 0.9,
+  nowplay = {};
 
-volumec.on('change',function() {
-  song.volume = ($(this).val() -1) / 10;
-  if (song.volume > 0.7) {
-    vol.css('backgroundPosition','-11px -56px');
+  nowplay.c = $('#nowplaying');
+  nowplay.title= nowplay.c.find('.title');
+  nowplay.artist = nowplay.c.find('.artist');
+  nowplay.album = nowplay.c.find('.album');
+  nowplay.year= nowplay.c.find('.year');
+  nowplay.art = nowplay.c.find('.art');
+
+  if (!Modernizr.inputtypes.range) {
+    seek.remove();
+    vol.remove();
   }
-  if (song.volume < 0.1) {
-    vol.css('backgroundPosition','-91px -56px');
-  }
-  if ((song.volume <= 0.7) && (song.volume >= 0.1))  {
-    vol.css('backgroundPosition','-51px -56px');
-  }
-});
 
-stop.on('click',function() {
-  song.pause();
-  song.currentTime= 0;
-  playpause.removeClass('playing');
-});
+  var readSong = function() {
+    var pro = $('#playlist .loaded').eq(index);
 
-playpause.on('click',function() {
-  if (song.paused) {
-    song.play();
+    var reader = new FileReader();
+    reader.onprogress = function(evt) {
+      if (!evt.lengthComputable) return;
+      percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+      if (percentLoaded < 100) {
+        pro.text(percentLoaded+'%');
+      }
+    };
+    reader.onloadstart = function(e) {
+      $('#playlist .loaded').text('');
+    };
+    reader.onload = function(e) {
+      pro.text('100%');
+      if (currentSong) currentSong.stop();
+      currentSong = new song(e.target.result, songs[index]);
+    };
+    reader.readAsDataURL(songs[index]);
+    $('#playlist li').removeClass('active').eq(index).addClass('active');
+  };
+
+
+
+  var song = function(data,dasong) {
+    var self = this;
+    $('audio').remove();
+    self.audio = new Audio(data);
+    self.song = dasong;
+
+    self.audio.addEventListener('timeupdate',function (){
+      var current = +song.currentTime;
+      var perc = current/song.duration * 100;
+      seek.val(self.audio.currentTime);
+      seek.attr('max', self.audio.duration);
+    });
+
+    self.audio.addEventListener('ended',function() {
+      self.audio.currentTime=0;
+      playpause.removeClass('playing');
+      if (autoplay) {
+        playnext();
+      }
+    });
+
+    seek.attr('max',self.audio.duration);
+    self.volume(volume);
+    self.meta();
+  };
+  song.prototype.volume = function(vol) {
+    var self = this;
+
+    if (typeof vol == 'undefined') return self.audio.volume;
+
+    // update global
+    volume = vol;
+
+    self.audio.volume = vol;
+  };
+  song.prototype.play = function() {
+    var self = this;
+
+    self.audio.play();
     playpause.addClass('playing');
-  }else{
-    song.pause();
+  };
+  song.prototype.pause = function() {
+    var self = this;
+
+    self.audio.pause();
     playpause.removeClass('playing');
-  }
-});
+  };
+  song.prototype.stop = function() {
+    var self = this;
 
-vol.on('mouseenter',function() {
-  volumec.fadeIn(200);
-});
+    self.pause();
+    self.seek(0);
+  };
+  song.prototype.playPause = function() {
+    var self = this;
 
-vol.on('mouseleave', function() {
-  volumec.fadeOut(200);
-});
+    if (self.audio.paused) {
+      self.play();
+    }else{
+      self.pause();
+    }
+  };
 
-function nowPlaying(p) {
-  nowplay.title.text(songs[p].meta.title);
-  nowplay.artist.text(songs[p].meta.artist);
-  nowplay.album.text(songs[p].meta.album);
-  nowplay.year.text(songs[p].meta.year);
-  $.getJSON('http://api.discogs.com/database/search?callback=?&title&q='+songs[p].meta.artist+' - '+songs[p].meta.album, function (data) {
-    if ((data.data.results[0]) || (data.data.results[0].title.search(songs[p].meta.artist) !== -1)) {
-      nowplay.art.attr({'src':data.data.results[0].thumb, 'title': songs[p].meta.artist+' - '+songs[p].meta.album});
+  song.prototype.seek = function(time) {
+    var self = this;
+
+    if (typeof time == 'undefined') return self.audio.currentTime;
+
+    if (time == self.seek()) return;
+    self.audio.currentTime = time;
+
+    // just to be sure
+    seek.attr('max', self.audio.duration);
+  };
+
+
+  song.prototype.meta = function() {
+    var self = this;
+
+    if (!self.song.meta) return;
+    nowplay.title.text(self.song.meta.title);
+    nowplay.artist.text(self.song.meta.artist);
+    nowplay.album.text(self.song.meta.album);
+    nowplay.year.text(self.song.meta.year);
+    $.getJSON('http://api.discogs.com/database/search?callback=?&title&q='+self.song.meta.artist+' - '+self.song.meta.album, function (data) {
+      if ((data.data.results[0]) || (data.data.results[0].title.search(self.song.meta.artist) !== -1)) {
+        nowplay.art.attr({
+          'src':data.data.results[0].thumb,
+          'title': self.song.meta.artist+' - '+self.song.meta.album
+        });
+      }
+    });
+  };
+
+
+  autotoggle.on('click',function() {
+    if (autotoggle.hasClass('active')) {
+      autotoggle.removeClass('active');
+      autoplay = false;
+    }else{
+      autotoggle.addClass('active');
+      autoplay = true;
     }
   });
-}
 
-function playnext() {
-  var reader = new FileReader();
-  reader.onprogress = updateProgress;
-  reader.onloadstart = function(e) {
-    $('#playlist .loaded').text('');
-  };
-  reader.onload = function(e) {
-    $($('#playlist .loaded')[index]).text('100%');
-    console.log('complete');   
-    song.pause();
-    song.currentTime = 0;
-    playerinit(e.target.result, songs[index].type);
-    playpause.addClass('playing');
-    song.play();
-  };
-  if (songs[index+1] !== undefined) {
-    index++;
-    nowPlaying(index);
-    reader.readAsDataURL(songs[index]);
-    $($('#playlist li').removeClass('active').get(index)).addClass('active');
+
+
+  seek.on('change',function() {
+    currentSong.seek($(this).val());
+  });
+
+  volumec.on('change',function() {
+    currentSong.volume(($(this).val() -1) / 10);
+
+    var cv = currentSong.volume();
+    if (cv > 0.7) {
+      vol.css('backgroundPosition','-11px -56px');
+    }
+    if (cv < 0.1) {
+      vol.css('backgroundPosition','-91px -56px');
+    }
+    if ((cv <= 0.7) && (cv >= 0.1))  {
+      vol.css('backgroundPosition','-51px -56px');
+    }
+  });
+
+  stop.on('click',function() {
+    currentSong.stop();
+  });
+
+  playpause.on('click',function() {
+    currentSong.playPause();
+  });
+
+  vol.on('mouseenter',function() {
+    volumec.fadeIn(200);
+  });
+
+  vol.on('mouseleave', function() {
+    volumec.fadeOut(200);
+  });
+
+  var playnext = function() {
+    if (songs[index+1]) {
+      index++;
+      readSong();
+    }
   }
-}
 
-$('#playlist li').on('click', function() {
-  if (!$(this).hasClass('songs')) {
-    playpause.removeClass('playing');
+  $('#playlist').on('click','li', function() {
+
+    if ($(this).hasClass('songs')) return;
+
+    if (currentSong) currentSong.stop();
+
     var newindex = $('#playlist li').index(this);
     if (newindex != index) {
       index = newindex;
       $('#playlist li').removeClass('active');
-      $(this).addClass('active'); 
-      nowPlaying(index);
-      var reader = new FileReader();
-      reader.onprogress = updateProgress;
-      console.log(index);
-      reader.onloadstart = function(e) {
-        $('#playlist .loaded').text('');
-      };
-      reader.onload = function(e) {
-        $($('#playlist .loaded')[index]).text('100%');
-        console.log('complete');   
-        song.pause();
-        song.currentTime = 0;
-        playerinit(e.target.result, songs[index].type);
-        playpause.addClass('playing');
-        song.play();
-      };
-      reader.readAsDataURL(songs[index]);    
-    }
-  }
-});
+      $(this).addClass('active');
 
-function playerinit(songdata, songtype) {
-  $('audio').remove();
-  song = [];
-  song = new Audio(songdata);
-  song.addEventListener('timeupdate',function (){
-    var current = +song.currentTime;
-    var perc = current/song.duration * 100;
-    seek.val(song.currentTime);
-    seek.attr('max', song.duration);
+      readSong();
+    }
   });
-  song.addEventListener('ended',function() {
-    song.currentTime=0;
-    playpause.removeClass('playing');
-    if (autoplay) {
-      playnext();
-    }
 
-  });
-  song.volume = 0.9;
-}
-function updateList(songlist) {
+  var filechanged = function(files) {
 
-}
+    var getMetaData = function(i) {
+      if (!songs[i].meta) {
+        var metad = songs[i].slice(songs[i].size-128);
+        var metareader = new FileReader();
+        metareader.onload = function(e) {
+          var metadata = e.target.result;
+          if (metadata.indexOf('TAG') !== -1) {
+            metadata = metadata.substr(3, metadata.length-3);
+            songs[i].meta = {};
+            songs[i].meta.title = metadata.substr(0,30);
+            songs[i].meta.artist = metadata.substr(30,30);
+            songs[i].meta.album = metadata.substr(60,30);
+            songs[i].meta.year = metadata.substr(90,4);
+            if (i == index) {
+              $('#playlist').append('<li class="active">'+songs[i].meta.title+' - '+songs[i].meta.artist+' <span class="loaded">'+percentLoaded+'%</span></li>');
+            }else {
+              $('#playlist').append('<li>'+songs[i].meta.title+' - '+songs[i].meta.artist+' <span class="loaded"></span></li>');
+            }
 
-
-
-
-function updateProgress(evt) {
-  if (evt.lengthComputable) {
-    percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-    if (percentLoaded < 100) {
-      $($('#playlist .loaded')[index]).text(percentLoaded+'%');
-    }
-  }
-}
-
-
-
-function filechanged(files) {
-  function getMetaData(i) {
-    if (!songs[i].meta) {
-      var metad = songs[i].slice(songs[i].size-128);
-      var metareader = new FileReader();
-      metareader.onload = function(e) {
-        var metadata = e.target.result;
-        if (~metadata.indexOf('TAG')) {
-          metadata = metadata.substr(3, metadata.length-3);
-          songs[i].meta = {};
-          songs[i].meta.title = metadata.substr(0,30);
-          songs[i].meta.artist = metadata.substr(30,30);
-          songs[i].meta.album = metadata.substr(60,30);
-          songs[i].meta.year = metadata.substr(90,4);
-          if (i == index) {
-            $('#playlist').append('<li class="active">'+songs[i].meta.title+' - '+songs[i].meta.artist+' <span class="loaded">'+percentLoaded+'%</span></li>');
-          }else {
-            $('#playlist').append('<li>'+songs[i].meta.title+' - '+songs[i].meta.artist+' <span class="loaded"></span></li>');
+          }else{
+            // no meta :(
+            songs[i].meta = {};
+            songs[i].meta.title = songs[i].name;
+            if (i == index) {
+              $('#playlist').append('<li class="active">'+songs[i].name+'<span class="loaded">'+percentLoaded+'%</span></li>');
+            }else {
+              $('#playlist').append('<li>'+songs[i].name+' <span class="loaded"></span></li>');
+            }
           }
-
-        }else{
-          songs[i].meta = {};
-          songs[i].meta.title = songs[i].name;
-          if (i == index) {
-            $('#playlist').append('<li class="active">'+songs[i].name+'<span class="loaded">'+percentLoaded+'%</span></li>');
-          }else {
-            $('#playlist').append('<li>'+songs[i].name+' <span class="loaded"></span></li>');
+          if (j+1 < songs.length) {
+            j++;
+            getMetaData(j);
+          }else{
+            readSong();
+            $('#playlist').removeClass('loading').append('<li class="songs"><input style="opacity:0" type="file" id="choosefiles" multiple /></li>');
           }
-
+        };
+        metareader.readAsBinaryString(metad);
+      } else {
+        // already got meta
+        if (i == index) {
+          $('#playlist').append('<li class="active">'+songs[i].meta.title+' - '+songs[i].meta.artist+' <span class="loaded">'+percentLoaded+'%</span></li>');
+        }else {
+          $('#playlist').append('<li>'+songs[i].meta.title+' - '+songs[i].meta.artist+' <span class="loaded"></span></li>');
         }
         if (j+1 < songs.length) {
           j++;
           getMetaData(j);
         }else{
-          nowPlaying(index);
+          readSong();
+
           $('#playlist').removeClass('loading').append('<li class="songs"><input style="opacity:0" type="file" id="choosefiles" multiple /></li>');
         }
-      };
-      metareader.readAsBinaryString(metad);
-    }else{
-      if (i == index) {
-        $('#playlist').append('<li class="active">'+songs[i].meta.title+' - '+songs[i].meta.artist+' <span class="loaded">'+percentLoaded+'%</span></li>');
-      }else {
-        $('#playlist').append('<li>'+songs[i].meta.title+' - '+songs[i].meta.artist+' <span class="loaded"></span></li>');
       }
-      if (j+1 < songs.length) {
-        j++;
-        getMetaData(j);
-      }else{
-        nowPlaying(index);
+    };
 
-        $('#playlist').removeClass('loading').append('<li class="songs"><input style="opacity:0" type="file" id="choosefiles" multiple /></li>');
+    var oldlength = songs.length;
+
+    for (var i = 0; i < files.length; i++) {
+      if (files[i].type == 'audio/mp3') {
+        songs.push(files[i]);
       }
     }
-  }
-  console.log(files);
-  var oldlength = songs.length;
-  for (var i = 0; i< files.length; i++) {
-    if (files[i].type == 'audio/mp3') {
-      songs.push(files[i]);
+    var i = 0, j = 0;
+    $('#playlist').empty();
+    getMetaData(0);
+    if (songs.length > 0) {
+      $('#playlist').css('marginTop','30px');
+      if (updates === 0) {
+        player.css('opacity','1');
+        index = 0;
+        readSong();
+      }
     }
-  }   
-  var i = 0, j = 0;
-  if (songs.length > oldlength) {
-    $('#playlist').addClass('loading').html('');
-  }
-  getMetaData(0);
-  if (songs.length > 0) {
-    $('#playlist').css('marginTop','30px');
-    if (updates === 0) {
-      player.css('opacity','1');
-
-      var reader = new FileReader();
-      reader.onprogress = updateProgress;
-      reader.onload = function(e) {
-        $($('#playlist li')[0]).addClass('active');
-        $($('#playlist .loaded')[0]).text('100%');
-        playerinit(e.target.result, songs[0].type);
-      };
-      reader.readAsDataURL(songs[0]);    
+    if (songs.length > 1) {
+      autotoggle.css('opacity','1');
     }
-  }
-  if (songs.length > 1) {
-    autotoggle.css('opacity','1');
-  }
-  updates++;
-}
+    updates++;
+  };
 
 
 
 
 
-$('#choosefiles').on('change',function(e) {
-  var files = e.target.files;
-  filechanged(files);
+  $('#playlist').on('change','#choosefiles',function(e) {
+    var files = e.target.files;
+    filechanged(files);
+  });
 });
