@@ -35,7 +35,7 @@ $(function() {
     vol.remove();
   }
 
-  var readSong = function() {
+  var readSong = function(play) {
     var pro = $('#playlist .loaded').eq(index);
 
     var reader = new FileReader();
@@ -51,8 +51,9 @@ $(function() {
     };
     reader.onload = function(e) {
       pro.text('100%');
-      if (currentSong) currentSong.stop();
+      if (currentSong) currentSong.destroy();
       currentSong = new song(e.target.result, songs[index]);
+      if (play) currentSong.play();
     };
     reader.readAsDataURL(songs[index]);
     $('#playlist li').removeClass('active').eq(index).addClass('active');
@@ -62,7 +63,7 @@ $(function() {
 
   var song = function(data,dasong) {
     var self = this;
-    $('audio').remove();
+
     self.audio = new Audio(data);
     self.song = dasong;
 
@@ -153,6 +154,11 @@ $(function() {
       }
     });
   };
+  song.prototype.destroy = function() {
+    var self = this;
+    self.audio = null;
+    self.song = null;
+  };
 
 
   autotoggle.on('click',function() {
@@ -205,9 +211,9 @@ $(function() {
   var playnext = function() {
     if (songs[index+1]) {
       index++;
-      readSong();
+      readSong(true);
     }
-  }
+  };
 
   $('#playlist').on('click','li', function() {
 
@@ -221,7 +227,7 @@ $(function() {
       $('#playlist li').removeClass('active');
       $(this).addClass('active');
 
-      readSong();
+      readSong(true);
     }
   });
 
@@ -260,7 +266,7 @@ $(function() {
             j++;
             getMetaData(j);
           }else{
-            readSong();
+            if (!currentSong) readSong();
             $('#playlist').removeClass('loading').append('<li class="songs"><input style="opacity:0" type="file" id="choosefiles" multiple /></li>');
           }
         };
@@ -276,7 +282,7 @@ $(function() {
           j++;
           getMetaData(j);
         }else{
-          readSong();
+          if (!currentSong) readSong();
 
           $('#playlist').removeClass('loading').append('<li class="songs"><input style="opacity:0" type="file" id="choosefiles" multiple /></li>');
         }

@@ -1,98 +1,110 @@
 {
-  "layout": "base",
+  "layout": "project",
   "title": "jQuery Toggles",
-  "scripts": ["/js/lib/toggles-min.js", "/js/toggles.js"],
-  "css": ["/css/toggles.css"]
+  "scripts": ["/js/lib/toggles-min.js", "/js/toggles.js","/js/lib/prism.js"],
+  "css": ["/css/toggles.css","/css/prism.css"],
+  "subtitle": "Toggles is a lightweight jQuery plugin that creates easily-styleable toggle buttons.",
+  "buttons": {
+    "github": "jquery-toggles",
+    "twitter": {
+      "url": "/toggles",
+      "text": "jQuery Toggle Buttons",
+      "hashtags": ["jquery"]
+    },
+    "facebook": {
+      "url": "/toggles"
+    }
+  },
+  "herohtml": "<div class='downloads'><a class='min' href='https://github.com/simontabor/jquery-toggles/archive/master.zip' target='_blank'>Download<small> (v2)</small><span>.zip</span></a><a class='minny' href='https://raw.github.com/simontabor/jquery-toggles/master/toggles-min.js' target='_blank'>or just get the minified JS (2.1kb)</a></div>"
 }
 ______
-
-<div class="hero">
-  <h2>jQuery Toggles</h2>
-  <h3 class="subtitle">Toggles is a lightweight jQuery plugin that creates easily-styleable toggle buttons.</h3>
-  <div class="downloads">
-    <a class="min" href="/labs/toggles/jquery-toggles.zip" target="_blank">
-      Download
-      <span>.zip</span>
-    </a>
-    <a class="minny" href="https://raw.github.com/simontabor/jquery-toggles/master/toggles-min.js" target="_blank">or just get the minified JS (2.1kb)</a>
-  </div>
-</div>
 
 <div class="mid">
 
   <h4>Themes</h4>
   <div class="themes">
-    <div class="light">
+    <div class="toggle-light">
       <div>
         <h5>Light</h5>
-        <div class="toggle"></div>
+        <div class="toggle on"></div>
       </div>
-      <a class="theme-download" target="_blank" href="https://raw.github.com/simontabor/jquery-toggles/master/themes/toggles-light.css">Download theme</a>
     </div>
     
-    <div class="dark">
+    <div class="toggle-dark">
       <div>
         <h5>Dark</h5>
-        <div class="toggle"></div>
+        <div class="toggle on"></div>
       </div>
-      <a class="theme-download" target="_blank" href="https://raw.github.com/simontabor/jquery-toggles/master/themes/toggles-dark.css">Download theme</a>
     </div>
-    <div class="iphone">
+    <div class="toggle-iphone">
       <div>
         <h5>iPhone</h5>
-        <div class="toggle"></div>
+        <div class="toggle on"></div>
       </div>
-      <a class="theme-download" target="_blank" href="https://raw.github.com/simontabor/jquery-toggles/master/themes/toggles-iphone.css">Download theme</a>
+    </div>
+    <div class="toggle-modern">
+      <div>
+        <h5>Modern</h5>
+        <div class="toggle on"></div>
+      </div>
+    </div>
+    <div class="toggle-soft">
+      <div>
+        <h5>Soft</h5>
+        <div class="toggle on"></div>
+      </div>
     </div>
   </div>
 
 
   <h4>Examples</h4>
-  <div class="light examples">
+  <div class="toggle-light examples">
     <div class="themeselect">
       <label for="theme">Select Theme: </label>
       <select id="theme">
         <option rel="light">Light</option>
         <option rel="dark">Dark</option>
         <option rel="iphone">iPhone</option>
+        <option rel="modern">Modern</option>
+        <option rel="soft">Soft</option>
       </select>
     </div>
 
     <div class="example">
       <h4>No Click</h4>
       <div class="toggle noclick"></div>
-      <code>$('.toggle').toggles({clickable:false});</code>
+      <code class="lang-javascript">$('.toggle').toggles({click:false});</code>
     </div>
 
     <div class="example">
       <h4>No Drag</h4>
       <div class="toggle nodrag"></div>
-      <code>$('.toggle').toggles({dragable:false});</code>
+      <code class="lang-javascript">$('.toggle').toggles({drag:false});</code>
     </div>
 
     <div class="example">
       <h4>Clickable Element</h4>
       <div class="clickme"><span style="font-size:13px">Click here!</span> <div rel="clickme" class="toggle"></div></div>
-      <code>$('.toggle').toggles({click:$('.clickme')});</code>
+      <code class="lang-javascript">$('.toggle').toggles({clicker:$('.clickme')});</code>
     </div>
 
     <div class="example">
       <h4>Toggle a Checkbox</h4>
       <div class="toggle" data-checkbox="checkme"></div>
       <input type="checkbox" disabled class="checkme">
-      <code>$('.toggle').toggles({checkbox:$('.checkme')});</code>
+      <code class="lang-javascript">$('.toggle').toggles({checkbox:$('.checkme')});</code>
     </div>
 
     <div class="example">
-      <h4>Be Off by Default</h4>
-      <div class="toggle off"></div>
-      <code>$('.toggle').toggles({on:false});</code>
+      <h4>Be On by Default</h4>
+      <div class="toggle on"></div>
+      <code class="lang-javascript">$('.toggle').toggles({on:true});</code>
     </div>
 
     <div class="example">
       <h4>Custom Text</h4>
       <div class="toggle" data-ontext="HI" data-offtext="BYE"></div>
-      <code>$('.toggle').toggles({ontext:'HI',offtext:'BYE'});</code>
+      <code class="lang-javascript">$('.toggle').toggles({text:{on:'HI',off:'BYE'}});</code>
     </div>
 
   </div>

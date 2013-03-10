@@ -1,17 +1,20 @@
 $('.toggle').each(function() {
   $(this).toggles({
-    clickable: !$(this).hasClass('noclick'),
-    dragable: !$(this).hasClass('nodrag'),
-    click: ($(this).attr('rel')) ? $('.'+$(this).attr('rel')) : null,
-    on: !$(this).hasClass('off'),
+    click: !$(this).hasClass('noclick'),
+    drag: !$(this).hasClass('nodrag'),
+    clicker: ($(this).attr('rel')) ? $('.'+$(this).attr('rel')) : null,
+    on: $(this).hasClass('on'),
     checkbox: ($(this).data('checkbox')) ? $('.'+$(this).data('checkbox')) : null,
-    ontext: $(this).data('ontext') || 'ON',
-    offtext: $(this).data('offtext') || 'OFF'
+    text: {
+      on: $(this).data('ontext') || 'ON',
+      off: $(this).data('offtext') || 'OFF'
+    },
+    transition: 'ease-out'
   });
 });
 
-$('#theme').change(function() {
-  $('.examples').removeClass('light dark iphone').addClass($(this).find('option:selected').attr('rel'));
+$('#theme').on('change',function() {
+  $('.examples').removeClass('toggle-light toggle-dark toggle-iphone toggle-modern toggle-soft').addClass('toggle-'+$(this).find('option:selected').attr('rel'));
   GoSquared.q.push(['TrackEvent','Changed Theme to '+$(this).find('option:selected').text(), {}]);
 });
 
@@ -38,6 +41,6 @@ function selectText(element) {
     selection.addRange(range);
   }
 }
-$('code').click(function() {
+$('code').on('click',function() {
   selectText(this);
 });

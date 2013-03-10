@@ -1,0 +1,27 @@
+{
+  "layout": "base"
+}
+______
+
+<div class="hero">
+  <h2><%= page.title %></h2>
+ <% if (page.subtitle) { %><h3 class="subtitle"><%= page.subtitle %></h3><% } %>
+ <% if (page.herohtml) { %>
+  <%- page.herohtml %>
+ <% } %>
+ <% if (page.buttons) { %>
+  <% if (page.buttons.github) { %>
+    <iframe src="http://ghbtns.com/github-btn.html?user=simontabor&repo=<%= page.buttons.github %>&type=watch&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="90" height="20"></iframe>
+  <% } %>
+  <% if (page.buttons.twitter) { %>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://simontabor.com<%= page.buttons.twitter.url %>" data-text="<%= page.buttons.twitter.text %>" data-via="simon_tabor" data-hashtags="<%= page.buttons.twitter.hashtags.join(' ') %>">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  <% } %>
+  <% if (page.buttons.facebook) { %>
+    <div class="fb-like" data-href="http://simontabor.com<%= page.buttons.facebook.url %>" data-send="false" data-layout="button_count" data-width="75" data-show-faces="false" data-font="arial"></div>
+  <% } %>
+ <% } %>
+</div>
+
+<%- content %>
