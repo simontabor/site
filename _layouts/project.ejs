@@ -10,6 +10,7 @@ ______
   <%- page.herohtml %>
  <% } %>
  <% if (page.buttons) { %>
+ <div class="social">
   <% if (page.buttons.github) { %>
     <iframe src="http://ghbtns.com/github-btn.html?user=simontabor&repo=<%= page.buttons.github %>&type=watch&count=true"
   allowtransparency="true" frameborder="0" scrolling="0" width="90" height="20"></iframe>
@@ -21,6 +22,7 @@ ______
   <% if (page.buttons.facebook) { %>
     <div class="fb-like" data-href="http://simontabor.com<%= page.buttons.facebook.url %>" data-send="false" data-layout="button_count" data-width="75" data-show-faces="false" data-font="arial"></div>
   <% } %>
+</div>
  <% } %>
 </div>
 
