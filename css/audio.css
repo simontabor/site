@@ -92,7 +92,7 @@
 
 #playlist li.active::before {
   content:"";
-  background:url(/audio-sprite.png);
+  background:url(/img/audio-sprite.png);
   left:0;
   position:absolute;
   height:25px;
@@ -136,7 +136,7 @@
   border:1px solid #ddd;
   height:40px;
   width:40px;
-  background-image:url(/audio-sprite.png);
+  background-image:url(/img/audio-sprite.png);
   background-position:5px 0;
   -webkit-transition:background-position .35s ease-in-out;
   -o-transition:background-position .35s ease-in-out;
@@ -154,7 +154,7 @@
 }
 
 #player #playpause:hover {
-  background-image:url(/audio-sprite.png), -webkit-linear-gradient(top,#f2f2f2 0,#e5e5e5 100%);
+  background-image:url(/img/audio-sprite.png), -webkit-linear-gradient(top,#f2f2f2 0,#e5e5e5 100%);
   filter:progid:dximagetransform.microsoft.gradient(startColorstr='#f2f2f2',endColorstr='#e5e5e5',GradientType=0);
   border:1px solid #666;
   background-position:5px 0;
@@ -166,7 +166,7 @@
   -ms-box-shadow:inset 0 1px 5px rgba(0,0,0,0.25),0 1px 0 #fff;
   -webkit-box-shadow:inset 0 1px 5px rgba(0,0,0,0.25),0 1px 0 #fff;
   box-shadow:inset 0 1px 5px rgba(0,0,0,0.25),0 1px 0 #fff;
-  background-image:url(/audio-sprite.png), -webkit-linear-gradient(top,#c8c8c8 0,#e6e6e6 100%);
+  background-image:url(/img/audio-sprite.png), -webkit-linear-gradient(top,#c8c8c8 0,#e6e6e6 100%);
   filter:progid:dximagetransform.microsoft.gradient(GradientType=0,StartColorStr=#c8c8c8,EndColorStr=#e6e6e6);
   border-color:#888 #AAA #CCC;
 }
@@ -206,7 +206,7 @@
   left:70px;
   top:-54px;
   opacity:1;
-  background-image:url(/audio-sprite.png);
+  background-image:url(/img/audio-sprite.png);
   background-position:-11px -56px;
   -webkit-border-radius:3px;
   -moz-border-radius:3px;
@@ -252,7 +252,7 @@
 
 #stop {
   background-position:-91px -96px;
-  background-image:url(/audio-sprite.png);
+  background-image:url(/img/audio-sprite.png);
   height:20px;
   width:20px;
   position:relative;
