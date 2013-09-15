@@ -71,6 +71,30 @@
     p {
       margin: 26px 0 10px;
     }
+
+    .social {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 282px;
+    }
+
+    .back {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      color: white;
+      text-decoration: none;
+    }
+
+    @media screen and (max-width: 750px) {
+      .social {
+        left: 50%;
+        margin-left: -141px;
+        top: inherit;
+        bottom: 5px;
+      }
+    }
   </style>
 </head>
 <body id="dropbox">
@@ -84,6 +108,14 @@
 
     <p><span id="password"></span></p>
   </div>
+
+  <div class="social">
+    <iframe src="http://ghbtns.com/github-btn.html?user=simontabor&repo=pw&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="90" height="20"></iframe>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://simontabor.com/labs/pw" data-text="PW - Simple password generator based on service name, master password and keyfiles" data-via="simon_tabor" data-hashtags="js,nodejs">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    <div class="fb-like" data-href="http://simontabor.com/labs/pw" data-send="false" data-layout="button_count" data-width="75" data-show-faces="false" data-font="arial"></div>
+  </div>
+  <a href="../" class="back">&larr; Back</a>
 
   <script>
     var node = typeof require !== 'undefined';
@@ -199,5 +231,14 @@
       selectText(password);
     }
   </script>
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=222345401243936";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>
