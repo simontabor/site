@@ -16,14 +16,14 @@ $('.toggle').each(function() {
 
 $('#theme').on('change',function() {
   $('.examples').removeClass('toggle-light toggle-dark toggle-iphone toggle-modern toggle-soft').addClass('toggle-'+$(this).find('option:selected').attr('rel'));
-  GoSquared.q.push(['TrackEvent','Changed Theme to '+$(this).find('option:selected').text(), {}]);
+  _gs('event','Changed Theme to ' + $(this).find('option:selected').text());
 });
 
 $('.downloads .min').on('click',function() {
-  GoSquared.q.push(['TrackEvent','Downloaded Toggles', {}]);
+  _gs('event', 'Downloaded Toggles');
 });
 $('.downloads .minny').on('click',function() {
-  GoSquared.q.push(['TrackEvent','Downloaded Minified Toggles', {}]);
+  _gs('event', 'Downloaded Minified Toggles');
 });
 
 function selectText(element) {
