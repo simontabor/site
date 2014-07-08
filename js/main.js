@@ -23,3 +23,25 @@ $('header .expandable').on('mouseenter mouseleave',function(e) {
   e.preventDefault();
   $(this).toggleClass('expanded').find('ul').slideToggle(200);
 });
+
+function selectText(element) {
+  var doc = document;
+  var text = element;
+
+  if (doc.body.createTextRange) {
+    var range = doc.body.createTextRange();
+    range.moveToElementText(text);
+    range.select();
+  } else if (window.getSelection) {
+    var selection = window.getSelection();
+    var range = doc.createRange();
+    range.selectNodeContents(text);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+}
+
+
+$('code').on('click',function() {
+  selectText(this);
+});

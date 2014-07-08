@@ -1,0 +1,121 @@
+{
+  "layout": "project",
+  "title": "jQuery Sliders",
+  "scripts": ["/js/lib/sliders-min.js", "/js/sliders.js","/js/lib/prism.js"],
+  "css": ["/css/download.css","/css/sliders.css","/css/prism.css"],
+  "subtitle": "Sliders is a lightweight jQuery plugin that creates easily-styleable range sliders.",
+  "buttons": {
+    "github": "jquery-sliders",
+    "twitter": {
+      "url": "/labs/sliders",
+      "text": "jQuery Range Sliders",
+      "hashtags": ["jquery"]
+    },
+    "facebook": {
+      "url": "/labs/sliders"
+    }
+  },
+  "herohtml": "<div class='downloads'><a class='min' href='https://github.com/simontabor/jquery-sliders/archive/master.zip' target='_blank'>Download<small> (v1)</small><span>.zip</span></a><a class='minny' href='https://raw.github.com/simontabor/jquery-sliders/master/sliders.min.js' target='_blank'>or just get the minified JS (1.2kb)</a></div>"
+}
+______
+
+<div class="mid">
+
+  <h4>Themes</h4>
+  <div class="themes">
+    <div class="slider-light">
+      <div>
+        <h5>Light</h5>
+        <div class="slider" data-slider-value="2"></div>
+      </div>
+    </div>
+
+    <div class="slider-dark">
+      <div>
+        <h5>Dark</h5>
+        <div class="slider" data-slider-value="2"></div>
+      </div>
+    </div>
+    <div class="slider-iphone">
+      <div>
+        <h5>iPhone</h5>
+        <div class="slider" data-slider-value="2"></div>
+      </div>
+    </div>
+    <div class="slider-modern">
+      <div>
+        <h5>Modern</h5>
+        <div class="slider" data-slider-value="2"></div>
+      </div>
+    </div>
+    <div class="slider-soft">
+      <div>
+        <h5>Soft</h5>
+        <div class="slider" data-slider-value="2"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <h4>Examples</h4>
+  <div class="slider-light examples">
+    <div class="themeselect">
+      <label for="theme">Select Theme: </label>
+      <select id="theme">
+        <option rel="light">Light</option>
+        <option rel="dark">Dark</option>
+        <option rel="iphone">iPhone</option>
+        <option rel="modern">Modern</option>
+        <option rel="soft">Soft</option>
+      </select>
+    </div>
+
+    <div class="example">
+      <h4>Set the default value</h4>
+      <div class="slider" data-slider-value="4"></div>
+      <code class="lang-javascript">$('.slider').sliders({value:4});</code>
+    </div>
+
+    <div class="example">
+      <h4>Set min/max range</h4>
+      <div class="slider" data-slider-min="10" data-slider-max="100"></div>
+      <code class="lang-javascript">$('.slider').sliders({min:10,max:100});</code>
+    </div>
+
+    <div class="example">
+      <h4>Set the step</h4>
+      <div class="slider" data-slider-step="0.1"></div>
+      <code class="lang-javascript">$('.slider').sliders({step:0.1});</code>
+    </div>
+
+    <div class="example">
+      <h4>No Click</h4>
+      <div class="slider" data-slider-click="false"></div>
+      <code class="lang-javascript">$('.slider').sliders({click:false});</code>
+    </div>
+
+    <div class="example">
+      <h4>No Drag</h4>
+      <div class="slider" data-slider-drag="false"></div>
+      <code class="lang-javascript">$('.slider').sliders({drag:false});</code>
+    </div>
+
+    <div class="example">
+      <h4>Inherit from an input</h4>
+      <input class="slider" max="11" min="0" step="0.1">
+      <code class="lang-markup">&lt;input type="range" class="slider" max="11" min="0" step="0.1"></code>
+      <code class="lang-javascript">$('.slider').sliders();</code>
+    </div>
+
+    <div class="example">
+      <h4>Control a range input</h4>
+      <div class="slider" data-slider-input="#slider-input-1"></div>
+      <input type="range" disabled id="slider-input-1">
+      <code class="lang-javascript">$('.slider').sliders({input:$('.my-range-input')});</code>
+    </div>
+
+  </div>
+  <div class="license">
+    MIT License. A link to my <a href="https://twitter.com/simon_tabor" target="_blank">Twitter</a> or this page would be greatly appreciated.
+  </div>
+</div>
