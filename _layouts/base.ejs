@@ -23,7 +23,11 @@ ______
      d.src='//d1l6p2sc9645hc.cloudfront.net/tracker.js';q.parentNode.
      insertBefore(d,q)}(window,document,'script','_gs');
 
-     _gs('GSN-757634-O');
+     _gs('GSN-757634-O', false);
+     _gs('set', 'trackLocal', true);
+     _gs('track', function() {
+      _gs('identify', _gs('get', 'clientID'));
+     });
     </script>
 
     <link href="https://plus.google.com/115011493167128003979" rel="publisher">
