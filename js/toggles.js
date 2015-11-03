@@ -9,7 +9,8 @@ $('.toggle').each(function() {
       on: $(this).data('ontext') || 'ON',
       off: $(this).data('offtext') || 'OFF'
     },
-    transition: 'ease-out',
+    easing: $(this).data('easing'),
+    animate: $(this).data('animate'),
     type: $(this).data('type')
   });
 });
