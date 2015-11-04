@@ -1,3 +1,4 @@
+// serenity
 /*
  jQuery Sliders v1.0.0
 Copyright 2014 Simon Tabor - MIT License

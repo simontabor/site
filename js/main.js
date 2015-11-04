@@ -1,3 +1,4 @@
+// serenity
 $('header .expand').on('click',function() {
   var h = $('header').toggleClass('expanded');
 
@@ -24,24 +25,18 @@ $('header .expandable').on('mouseenter mouseleave',function(e) {
   $(this).toggleClass('expanded').find('ul').slideToggle(200);
 });
 
-function selectText(element) {
+$('code').on('click',function() {
   var doc = document;
-  var text = element;
 
   if (doc.body.createTextRange) {
     var range = doc.body.createTextRange();
-    range.moveToElementText(text);
+    range.moveToElementText(this);
     range.select();
   } else if (window.getSelection) {
     var selection = window.getSelection();
     var range = doc.createRange();
-    range.selectNodeContents(text);
+    range.selectNodeContents(this);
     selection.removeAllRanges();
     selection.addRange(range);
   }
-}
-
-
-$('code').on('click',function() {
-  selectText(this);
 });

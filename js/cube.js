@@ -1,3 +1,4 @@
+// serenity
 var prefix;
 $(function () {
   var prefixes = ['','-o-','-webkit-','-moz-'];
@@ -107,14 +108,11 @@ $('a.spin').on('click',function() {
 });
 
 if (!Modernizr.inputtypes.color) {
- $('div.colors').hide(); 
+ $('div.colors').hide();
 }
 if (!Modernizr.inputtypes.range) {
   $('div.sensitivity').hide();
 }
-
-
 if (!Modernizr.csstransforms3d) {
-  var browsersucks = '<p style="text-align:center">Your browser doesn\'t support CSS 3D Transforms... upgrade?</p>';
-  $('#cube').html(browsersucks);
+  $('#cube').html('<p style="text-align:center">Your browser doesn\'t support CSS 3D Transforms... upgrade?</p>');
 }

@@ -1,3 +1,4 @@
+// serenity
 $('.toggle').each(function() {
   $(this).toggles({
     click: !$(this).hasClass('noclick'),

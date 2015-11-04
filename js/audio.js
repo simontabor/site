@@ -1,3 +1,4 @@
+// serenity
 // crappy browser checks
 $(function() {
 

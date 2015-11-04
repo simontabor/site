@@ -1,3 +1,4 @@
+// serenity
 /*
  jQuery Toggles v4.0.0
 Copyright 2012 - 2015 Simon Tabor - MIT License

@@ -1,3 +1,4 @@
+// serenity
 $('.slider').sliders()
   .on('change', function() {
     // console.log(arguments);
